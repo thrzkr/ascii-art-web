@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ASCII Art Web</title>
+	<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+	<main class="container">
+		<header>
+			<div class="brand-row">
+				<img class="brand-logo" src="/static/logo.svg" alt="ASCII Art Web logo">
+				<span class="moving-tagline">{{.Splash}}</span>
+			</div>
+			<h1>ASCII ART WEB</h1>
+			<p>Turn normal text into ASCII art.</p>
+		</header>
+
+		<form action="/ascii-art" method="post">
+			<label for="text">Text</label>
+			<textarea
+				id="text"
+				name="text"
+				rows="6"
+				maxlength="250"
+				placeholder="Type something..."
+				required
+			>{{.Text}}</textarea>
+
+			<small>
+				{{.CharCount}} / 250 characters
+			</small>
+
+			<fieldset>
+				<legend>Banner</legend>
+
+				<label>
+					<input type="radio" name="banner" value="standard"{{if eq .Banner "standard"}} checked{{end}}>
+					Standard
+				</label>
+
+				<label>
+					<input type="radio" name="banner" value="shadow"{{if eq .Banner "shadow"}} checked{{end}}>
+					Shadow
+				</label>
+
+				<label>
+					<input type="radio" name="banner" value="thinkertoy"{{if eq .Banner "thinkertoy"}} checked{{end}}>
+					Thinkertoy
+				</label>
+			</fieldset>
+
+			<button type="submit">Render ASCII Art</button>
+		</form>
+
+		<section class="result">
+			<h2>Result</h2>
+
+			{{if .Result}}
+			<pre>{{.Result}}</pre>
+			{{else}}
+			<p>Your result will appear here.</p>
+			{{end}}
+		</section>
+		<footer class="site-footer">
+			<span>created by tzakir &amp; aalhejai</span>
+			<span>© 2026 Reboot01</span>
+		</footer>
+	</main>
+</body>
+</html>
