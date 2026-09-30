@@ -14,7 +14,8 @@ func main() {
 
 	http.HandleFunc("/", z01.HomeHandler)
 	http.HandleFunc("/ascii-art", z01.AsciiArtHandler)
-	
+	http.HandleFunc("/creeper-audio", z01.CreeperAudioHandler)
+
 	staticFiles := http.StripPrefix("/static/", http.FileServer(http.Dir("static")))
 	http.Handle("/static/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Cache-Control", "no-store")
