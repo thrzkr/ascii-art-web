@@ -5,72 +5,96 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ASCII Art Web</title>
 	<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
 	<link rel="stylesheet" href="/static/styles.css">
+	
 </head>
 <body>
+	<header>
+		<div class="brand-row">
+			<a href="/"><img class="brand-logo" src="/static/logo.svg" alt="ASCII Art Web logo"></a>
+			<span class="moving-tagline">{{.Splash}}</span>
+		</div>
+	</header>
 	<main class="container">
-		<header>
-			<div class="brand-row">
-				<img class="brand-logo" src="/static/logo.svg" alt="ASCII Art Web logo">
-				<span class="moving-tagline">{{.Splash}}</span>
-			</div>
-			<h1>ASCII ART WEB</h1>
-			<p>Turn normal text into ASCII art.</p>
-		</header>
-
+		<div class="workspace">
 		<form action="/ascii-art" method="post">
 			<label for="text">Text</label>
 			<textarea
 				id="text"
 				name="text"
 				rows="6"
-				maxlength="250"
 				placeholder="Type something..."
 				required
 			>{{.Text}}</textarea>
 
-			<small>
-				{{.CharCount}} / 250 characters
+			<small aria-live="polite">
+				<span data-char-count>{{.CharCount}}</span> / 250 characters
 			</small>
-
 			<fieldset>
 				<legend>Banner</legend>
-
-				<label>
-					<input type="radio" name="banner" value="standard"{{if eq .Banner "standard"}} checked{{end}}>
-					Standard
-				</label>
-
-				<label>
-					<input type="radio" name="banner" value="shadow"{{if eq .Banner "shadow"}} checked{{end}}>
-					Shadow
-				</label>
-
-				<label>
-					<input type="radio" name="banner" value="thinkertoy"{{if eq .Banner "thinkertoy"}} checked{{end}}>
-					Thinkertoy
-				</label>
+				<div class="select-wrapper">
+					<select name="banner">
+						<option value="standard"{{if eq .Banner "standard"}} selected{{end}}>Standard</option>
+						<option value="shadow"{{if eq .Banner "shadow"}} selected{{end}}>Shadow</option>
+						<option value="thinkertoy"{{if eq .Banner "thinkertoy"}} selected{{end}}>Thinkertoy</option>
+					</select>
+				</div>
 			</fieldset>
-
 			<button type="submit">Render ASCII Art</button>
 		</form>
-
 		<section class="result">
-			<h2>Result</h2>
+			<div class="result-heading">
+				<h2>Result</h2>
+				{{if .Result}}<button class="copy-button" type="button" data-copy-result>Copy</button>{{end}}
+			</div>
 
 			{{if .Result}}
-			<pre>{{.Result}}</pre>
+			<div class="result-art">
+				<pre id="ascii-result">{{.Result}}</pre>
+			</div>
+			<p class="copy-status" aria-live="polite"></p>
 			{{else}}
 			<p>Your result will appear here.</p>
 			{{end}}
 		</section>
-		<footer class="site-footer">
-			<span>created by tzakir &amp; aalhejai</span>
-			<span>© 2026 Reboot01</span>
-		</footer>
+		</div>
 	</main>
+	<footer class="site-footer">
+		<span>created by tzakir &amp; aalhejai</span>
+		<span>© 2026 Reboot01</span>
+	</footer>
+	<script>
+		const copyButton = document.querySelector("[data-copy-result]");
+		if (copyButton) {
+			copyButton.addEventListener("click", async () => {
+				const result = document.getElementById("ascii-result").textContent;
+				const status = document.querySelector(".copy-status");
+				try {
+					await navigator.clipboard.writeText(result);
+					status.textContent = "Copied to clipboard.";
+				} catch {
+					status.textContent = "Could not copy. Please select the result and copy it.";
+				}
+			});
+		}
+
+		const textInput = document.querySelector("#text");
+		const characterCount = document.querySelector("[data-char-count]");
+		if (textInput && characterCount) {
+			textInput.addEventListener("input", () => {
+				characterCount.textContent = Array.from(textInput.value).length;
+			});
+		}
+
+		const form = document.querySelector(".workspace form");
+		const resultPanel = document.querySelector(".result");
+		if (form && resultPanel) {
+			const resizeObserver = new ResizeObserver(() => {
+				resultPanel.style.height = `${form.offsetHeight}px`;
+			});
+			resizeObserver.observe(form);
+		}
+	</script>
 </body>
 </html>
