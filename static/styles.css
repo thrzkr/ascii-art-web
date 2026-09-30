@@ -48,8 +48,10 @@
 
 body {
 	isolation: isolate;
+	display: flex;
+	flex-direction: column;
 	margin: 10px;
-	min-height: 100vh;
+	min-height: calc(100vh - 20px);
 	color: var(--text);
 	font-family: "Minecraft Regular", "Press Start 2P", "Courier New", monospace;
 	font-size: 20px;
@@ -81,6 +83,7 @@ body.creeper-background::before {
 
 .container {
 	width: min(90%, 900px);
+	min-height: 824px;
 	margin: 0 auto;
 	padding: 10px 0 10px;
 }
@@ -350,13 +353,14 @@ button:disabled {
 	justify-content: space-between;
 	gap: 16px;
 	flex: 0 0 auto;
+	padding: 0 0 10px;
 }
 
 h2 {
 	margin-top: 0;
 	margin-bottom: 0;
 	font-size: 22px;
-	/* padding: 0 0 8px; */
+	padding: 0 0 8px;
 }
 
 .result-art {
@@ -394,7 +398,7 @@ pre {
 	min-width: 100%;
 	max-width: none;
 	margin: 0;
-	padding: 15px;
+	padding: 8px 8px 8px 8px;
 	overflow: visible;
 	font-family: Consolas, "Courier New", monospace;
 	font-size: 12px;
@@ -411,61 +415,5 @@ footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-}
-
-@media (max-width: 600px) {
-	.container {
-		width: min(92%, 900px);
-		padding-top: 20px;
-	}
-
-	.brand-row {
-		margin-bottom: 8px;
-	}
-
-	.brand-logo {
-		width: 56vw;
-		height: 108px;
-	}
-
-	.moving-tagline {
-		left: calc(42% + 5vw);
-		width: 48%;
-		font-size: 18px;
-		text-align: center;
-		white-space: normal;
-	}
-
-	.site-footer {
-		align-items: flex-start;
-		flex-direction: column;
-		gap: 8px;
-	}
-
-	form,
-	.result {
-		padding: 16px;
-	}
-
-	body {
-		background-attachment: scroll;
-	}
-}
-
-@media (max-width: 760px) {
-	.workspace {
-		grid-template-columns: 1fr;
-	}
-
-	.creeper-widget {
-		top: auto;
-		right: 12px;
-		bottom: 12px;
-		transform: none;
-	}
-
-	.creeper-button {
-		width: 76px;
-		height: 76px;
-	}
+	margin-top: auto;
 }
