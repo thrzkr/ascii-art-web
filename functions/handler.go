@@ -10,11 +10,10 @@ import (
 )
 
 type PageData struct {
-	Text      string
-	Banner    string
-	Splash    string
-	Result    string
-	CharCount int
+	Text   string
+	Banner string
+	Splash string
+	Result string
 }
 
 func randomSplash() string {
@@ -85,31 +84,7 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	renderPage(w, http.StatusOK, PageData{Text: text, Banner: banner, Splash: randomSplash(), Result: result, CharCount: len([]rune(text))})
-}
-
-func CreeperAudioHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/creeper-audio" {
-		errorPage(w, http.StatusNotFound, "Missing creeper audio file")
-		return
-	}
-	if r.Method != http.MethodGet && r.Method != http.MethodHead {
-		w.Header().Set("Allow", "GET, HEAD")
-		errorPage(w, http.StatusMethodNotAllowed, "Method not allowed")
-		return
-	}
-
-	const audioPath = "static/creeper.mp3"
-	if _, err := os.Stat(audioPath); err != nil {
-		if os.IsNotExist(err) {
-			errorPage(w, http.StatusNotFound, "Missing creeper audio file")
-		} else {
-			errorPage(w, http.StatusInternalServerError, "Internal server error")
-		}
-		return
-	}
-
-	http.ServeFile(w, r, audioPath)
+	renderPage(w, http.StatusOK, PageData{Text: text, Banner: banner, Splash: randomSplash(), Result: result})
 }
 
 func renderPage(w http.ResponseWriter, status int, data PageData) {

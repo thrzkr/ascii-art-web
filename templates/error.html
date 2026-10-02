@@ -4,15 +4,18 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Error {{.StatusCode}} | ASCII Art Web</title>
+	<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
 	<link rel="stylesheet" href="/static/styles.css">
 </head>
-<body>
-	<img filter: brightness(0) invert(1); src="https://static.thenounproject.com/png/1142921-200.png" alt="Error" style="display: block; margin: 0 auto; width: 150px; height: 150px;">
-	<h1 class="error" style="text-align: center;">Error {{.StatusCode}}: {{.Message}} :(</h1>
-	<section style="text-align: center;" border: 2px solid dashed red;>
+	<body class="error-page">
+	<main class="error-content">
+		<img class="error-icon" src="https://static.thenounproject.com/png/1142921-200.png" alt="Error">
+		<h1 class="error">Error {{.StatusCode}}: {{.Message}} :(</h1>
+		<section class="error-message">
 		<p>Sorry, something went wrong while processing your request.</p>
 		<p>Please try again later or contact support if the issue persists.</p>
-		<a href="/" style="color: red; text-decoration: underline;">Return to home page</a>
-	</section>
+			<a href="/">Return to home page</a>
+		</section>
+	</main>
 </body>
 </html>

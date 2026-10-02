@@ -3,7 +3,7 @@
 ## Description
 
 ASCII Art Web is a simple Go web server that converts text into ASCII art.
-This version has a Minecraft theme to it, and some scripting.
+This version has a Minecraft theme.
 
 It supports these three banners:
 
@@ -11,7 +11,7 @@ It supports these three banners:
 - `shadow`
 - `thinkertoy`
 
-The project uses Go's standard library only. There is no JavaScript.
+The project uses Go's standard library only.
 
 ## Developer
 
