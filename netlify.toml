@@ -1,0 +1,5 @@
+[build]
+  publish = "."
+
+[functions]
+  included_files = ["templates/**", "banners/**", "static/splash.txt"]
